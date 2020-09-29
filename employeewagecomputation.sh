@@ -45,3 +45,15 @@ echo "Working on Hourly Basis"
 ;;
 esac
 
+echo "Wages for 20 days"
+day=20
+W=0
+for i in `seq $day`
+do
+R=$(( $RANDOM % 8 + 1 ))
+cal=$(( $R * 20 ))
+echo $cal
+W=$(( $W + $cal ))
+done
+echo "Total monthly wage is $W Rs"
+
