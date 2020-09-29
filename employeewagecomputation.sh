@@ -87,3 +87,17 @@ echo "Calculate work hours for one month"
 days=30
 CalHrs
 echo "Total working hours for a month $Totalhrs"
+
+days=7
+totalwage=0
+wage=()
+echo "Storing and priting daily wages and total wages in an array"
+for i in `seq $days`
+do
+R=$(( $RANDOM % 8 + 1 ))
+W=$(( $R * 20 ))
+wage[$i]=$W
+totalwage=$(( $totalwage + $W ))
+done
+wage[$i+1]=$totalwage
+echo ${wage[@]}
