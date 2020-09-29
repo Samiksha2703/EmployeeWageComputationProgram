@@ -20,3 +20,14 @@ W=$(( $R2 * 20 ))
 echo "DailyWage : $W"
 fi
 fi
+echo "Employee Type"
+R3=$(( $RANDOM % 12 + 1 ))
+if [ $R3 -eq 8 ]
+then 
+echo "Part Time"
+elif [ $R3 -eq 12 ]
+then 
+echo "Full Time"
+else
+echo "Workin on Hoursly Basis"
+fi
