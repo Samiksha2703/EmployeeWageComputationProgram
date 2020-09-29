@@ -31,3 +31,17 @@ echo "Full Time"
 else
 echo "Workin on Hoursly Basis"
 fi
+
+echo "Employee Type with Switch Case"
+case $R3 in 
+8)
+echo "Part Time"
+;;
+12)
+echo "Full Time"
+;;
+*)
+echo "Working on Hourly Basis"
+;;
+esac
+
