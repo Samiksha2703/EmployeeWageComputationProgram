@@ -73,3 +73,17 @@ day=$(( $day + 1 ))
 done
 echo "day=$day and hrs=$hrs" 
 echo "Monthly Wage : $W Rs"
+
+CalHrs() {
+Totalhrs=0
+for i in `seq $days`
+do
+hrs=$(( $RANDOM % 8 + 1 ))
+echo $hrs
+Totalhrs=$(( $Totalhrs + $hrs ))
+done
+}
+echo "Calculate work hours for one month"
+days=30
+CalHrs
+echo "Total working hours for a month $Totalhrs"
