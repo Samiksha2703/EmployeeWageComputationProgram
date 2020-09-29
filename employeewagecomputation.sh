@@ -57,3 +57,19 @@ W=$(( $W + $cal ))
 done
 echo "Total monthly wage is $W Rs"
 
+echo "Monthy Wage with condition eithe days=20 or hrs=100"
+day=0
+hrs=0
+W=0
+echo "Workin hours per day"
+while [ $day -lt 20 -a $hrs -lt 100 ]
+do
+R=$(( $RANDOM % 8 + 1 ))
+echo $R
+cal=$(( $R * 20 ))
+W=$(( $W + $cal ))
+hrs=$(($hrs + $R ))
+day=$(( $day + 1 ))
+done
+echo "day=$day and hrs=$hrs" 
+echo "Monthly Wage : $W Rs"
