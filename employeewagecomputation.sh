@@ -90,7 +90,7 @@ echo "Total working hours for a month $Totalhrs"
 
 days=7
 totalwage=0
-wage=()
+declare -A wage
 echo "Storing and priting daily wages and total wages in an array"
 for i in `seq $days`
 do
@@ -99,5 +99,8 @@ W=$(( $R * 20 ))
 wage[$i]=$W
 totalwage=$(( $totalwage + $W ))
 done
-wage[$i+1]=$totalwage
-echo ${wage[@]}
+wage[$(( $i + 1 ))]=$totalwage
+for i in `seq 8`
+do
+echo $i - ${wage[$i]}
+done
