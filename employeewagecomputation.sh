@@ -1,106 +1,318 @@
-##!/bin/bash/ -x
-echo "Welcome to Employee Wage Computation Program"
+#!/bin/bash/ 
+
+#UC1
+
 echo "Attendance"
-R1=$(( $RANDOM % 2 ))
-if [ $R1 -eq 0 ]
+random=$(( $RANDOM % 2 ))
+if [ $random -eq 0 ]
 then
-echo "A"
+echo "Absent"
 else
-echo "P"
-R2=$(( $RANDOM % 8 + 1 ))
-if [ $R2 -eq 8 ]
-then
-echo "Full Day"
-elif [ $R2 -eq 4 ]
-then
-echo "Half Day"
-else
-echo $R2
-W=$(( $R2 * 20 ))
-echo "DailyWage : $W"
-fi
-fi
-echo "Employee Type"
-R3=$(( $RANDOM % 12 + 1 ))
-if [ $R3 -eq 8 ]
-then 
-echo "Part Time"
-elif [ $R3 -eq 12 ]
-then 
-echo "Full Time"
-else
-echo "Workin on Hoursly Basis"
+echo "Present"
 fi
 
-echo "Employee Type with Switch Case"
-case $R3 in 
-8)
-echo "Part Time"
-;;
-12)
-echo "Full Time"
-;;
-*)
-echo "Working on Hourly Basis"
-;;
-esac
+#UC2
 
-echo "Wages for 20 days"
-day=20
-W=0
-for i in `seq $day`
+WAGE_PER_HR=20
+FULL_DAY_HRS=8
+
+daily_Wage=0
+
+        random=$(( $RANDOM % 2 ))
+
+
+        if [ $random -eq 1 ]
+        then
+                echo "Present"
+
+                daily_Wage=$(( $WAGE_PER_HR * $FULL_DAY_HRS ))
+                echo "Daily Wage : $daily_Wage"
+        else
+                echo "Absent"
+                echo "Daily Wage : 0"
+        fi
+
+#UC3
+
+WAGE_PER_HR=20
+FULL_DAY_HRS=8
+PART_TIME_HRS=4
+daily_Wage=0
+random=$(( $RANDOM % 3 ))
+        if [ $random -eq 1 ]
+        then
+                echo "Present - FullDay"
+                daily_Wage=$(( $WAGE_PER_HR * $FULL_DAY_HRS ))
+                echo "Daily Wage : $daily_Wage"
+        elif [ $random -eq 2 ]
+        then
+                echo "Present - PartTime"
+                daily_Wage=$(( $WAGE_PER_HR * $PART_TIME_HRS ))
+                echo "Daily Wage : $daily_Wage"
+        else
+                echo "Absent"
+                echo "Daily Wage : 0"
+        fi
+
+#UC4
+	
+WAGE_PER_HR=20
+FULL_DAY_HRS=8
+PART_TIME_HRS=4
+daily_Wage=0
+random=$(( $RANDOM % 3 ))
+        case $random in
+        1)
+                echo "Present - FullDay"
+                daily_Wage=$(( $WAGE_PER_HR * $FULL_DAY_HRS ))
+                echo "Daily Wage : $daily_Wage"
+        ;;
+        2)
+                echo "Present - PartTime"
+                daily_Wage=$(( $WAGE_PER_HR * $PART_TIME_HRS ))
+                echo "Daily Wage : $daily_Wage"
+        ;;
+        *)
+                echo "Absent"
+                echo "Daily Wage : 0"
+        ;;
+        esac
+
+
+#UC5
+
+NUM_OF_WORKING_DAYS=20
+WAGE_PER_HR=20
+FULL_DAY_HRS=8
+PART_TIME_HRS=4
+
+daily_Wage=0
+monthly_Wage=0
+
+for i in `seq $NUM_OF_WORKING_DAYS`
 do
-R=$(( $RANDOM % 8 + 1 ))
-cal=$(( $R * 20 ))
-echo $cal
-W=$(( $W + $cal ))
+        random=$(( $RANDOM % 3 ))
+
+
+        case $random in
+
+        1)
+        echo "Present - FullDay"
+	daily_Wage=$(( $WAGE_PER_HR * $FULL_DAY_HRS ))
+        ;;
+
+        2)
+        echo "Present - HalfDay"
+        daily_Wage=$(( $WAGE_PER_HR * $PART_TIME_HRS ))
+        ;;
+
+        *)
+        echo "Absent"
+        daily_Wage=0
+        ;;
+
+        esac
+
+        monthly_Wage=$(( $monthly_Wage + $daily_Wage ))
 done
-echo "Total monthly wage is $W Rs"
 
-echo "Monthy Wage with condition eithe days=20 or hrs=100"
-day=0
-hrs=0
-W=0
-echo "Workin hours per day"
-while [ $day -lt 20 -a $hrs -lt 100 ]
+echo "Monthly Wage : $monthly_Wage"
+
+
+
+#UC6
+
+NUM_OF_WORKING_DAYS=20
+MAX_HRS_IN_MONTH=100
+WAGE_PER_HR=20
+FULL_DAY_HRS=8
+PART_TIME_HRS=4
+
+monthly_Wage=0
+totalEmpHrs=0
+totalWorkingDays=0
+
+echo "Calculating monthly wages with condition days!>20 or hrs!>100"
+
+while [[ $totalEmpHrs -ne $MAX_HRS_IN_MONTH && $totalWorkingDays -ne $NUM_OF_WORKING_DAYS ]]
 do
-R=$(( $RANDOM % 8 + 1 ))
-echo $R
-cal=$(( $R * 20 ))
-W=$(( $W + $cal ))
-hrs=$(($hrs + $R ))
-day=$(( $day + 1 ))
+        ((totalWorkingDays++))
+        
+	random=$(( $RANDOM % 3 ))
+	
+
+	case $random in
+
+
+        1)
+                #Present fullday
+                empHrs=$FULL_DAY_HRS
+                ;;
+
+        2)
+                #Present halfday
+                empHrs=$PART_TIME_HRS
+                ;;
+        
+	*)
+                #absent
+                empHrs=0
+                ;;
+        
+	esac
+
+        totalEmpHrs=$(( $totalEmpHrs + $empHrs ))
 done
-echo "day=$day and hrs=$hrs" 
-echo "Monthly Wage : $W Rs"
 
-CalHrs() {
-Totalhrs=0
-for i in `seq $days`
+echo $totalEmpHrs
+
+monthly_Wage=$(( $totalEmpHrs * $WAGE_PER_HR ))
+
+echo "Monthly Wage : $monthly_Wage"
+
+
+
+#UC7
+
+
+TotalWorkingHrs() {
+while [[ $totalEmpHrs -ne $MAX_HRS_IN_MONTH && $totalWorkingDays -ne $NUM_OF_WORKING_DAYS ]]
 do
-hrs=$(( $RANDOM % 8 + 1 ))
-echo $hrs
-Totalhrs=$(( $Totalhrs + $hrs ))
+        ((totalWorkingDays++))
+        random=$(( $RANDOM % 3 ))
+
+
+        case $random in
+        1)
+                #Present fullday
+                empHrs=8
+                ;;
+        2)
+                #Present halfday
+                empHrs=4
+                ;;
+        *)
+                #absent
+                empHrs=0
+                ;;
+        esac
+
+        totalEmpHrs=$(( $totalEmpHrs + $empHrs ))
 done
 }
-echo "Calculate work hours for one month"
-days=30
-CalHrs
-echo "Total working hours for a month $Totalhrs"
 
-days=7
-totalwage=0
-declare -A wage
-echo "Storing and priting daily wages and total wages in an array"
-for i in `seq $days`
+NUM_OF_WORKING_DAYS=20
+MAX_HRS_IN_MONTH=100
+WAGE_PER_HR=20
+FULL_DAY_HRS=8
+PART_TIME_HRS=4
+monthly_Wage=0
+
+totalEmpHrs=0
+totalWorkingDays=0
+
+echo "Calculate work hours for one month"
+
+TotalWorkingHrs
+
+echo "Total working hours for a month $totalEmpHrs"
+
+
+#UC8
+
+Wage=()
+
+NUM_OF_WORKING_DAYS=20
+WAGE_PER_HR=20
+FULL_DAY_HRS=8
+PART_TIME_HRS=4
+
+daily_Wage=0
+monthly_Wage=0
+
+for i in `seq $NUM_OF_WORKING_DAYS`
 do
-R=$(( $RANDOM % 8 + 1 ))
-W=$(( $R * 20 ))
-wage[$i]=$W
-totalwage=$(( $totalwage + $W ))
+	random=$(( $RANDOM % 3 ))
+
+
+        case $random in
+        
+	1)
+                #Present - FullDay
+                daily_Wage=$(( $WAGE_PER_HR * $FULL_DAY_HRS ))
+        ;;
+        
+	2)
+                #Present - HalfDay
+                daily_Wage=$(( $WAGE_PER_HR * $PART_TIME_HRS ))
+        ;;
+        
+	*)
+                #Absent
+		daily_Wage=0
+        ;;
+
+        esac
+
+	Wage[$i]=$daily_Wage
+	
+monthly_Wage=$(( $monthly_Wage + $daily_Wage ))
+
 done
-wage[$(( $i + 1 ))]=$totalwage
-for i in `seq 8`
+
+	Wage[$(( $i + 1))]=$monthly_Wage
+
+echo ${!Wage[@]}
+
+echo ${Wage[@]}
+
+
+#UC9
+
+
+declare -A Wage
+
+NUM_OF_WORKING_DAYS=20
+WAGE_PER_HR=20
+FULL_DAY_HRS=8
+PART_TIME_HRS=4
+
+daily_Wage=0
+monthly_Wage=0
+
+for i in `seq $NUM_OF_WORKING_DAYS`
 do
-echo $i - ${wage[$i]}
+	random=$(( $RANDOM % 3 ))
+
+
+        case $random in
+
+
+        1)
+                #Present - FullDay
+                daily_Wage=$(( $WAGE_PER_HR * $FULL_DAY_HRS ))
+        ;;
+        2)
+                #Present - HalfDay
+                daily_Wage=$(( $WAGE_PER_HR * $PART_TIME_HRS ))
+        ;;
+        *)
+                #Absent
+		daily_Wage=0
+        ;;
+
+        esac
+
+	Wage[$i]=$daily_Wage
+	
+monthly_Wage=$(( $monthly_Wage + $daily_Wage ))
+
 done
+
+	Wage[$(( $i + 1 ))]=$monthly_Wage
+
+for i in `seq 21`
+do
+        echo "$i - ${Wage[$i]}"
+done
+
